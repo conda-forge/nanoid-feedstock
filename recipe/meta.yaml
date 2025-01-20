@@ -6,26 +6,27 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 5a80cad5e9c6e9ae3a41fa2fb34ae189f7cb420b2a5d8f82bd9d23466e4efa68
 
 build:
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=2
+    - python {{ python_min }}
     - pip
   run:
-    - python >=2
+    - python >={{ python_min }}
 
 test:
   imports:
     - nanoid
   requires:
     - pip
+    - python {{ python_min }}
   commands:
     - pip check
     - python -c "from nanoid import generate"
